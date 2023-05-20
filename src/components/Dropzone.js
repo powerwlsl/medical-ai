@@ -109,7 +109,7 @@ function Dropzone({ files, setFiles }) {
   }, []);
 
   return (
-    <section className="container">
+    <section className="container p-4 border-2 rounded-lg border-dashed">
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <div className="text-center">
