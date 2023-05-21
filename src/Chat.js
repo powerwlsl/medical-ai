@@ -4,8 +4,7 @@ import env from "react-dotenv";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
   const configuration = new Configuration({
-    //apiKey: process.env.REACT_APP_OPEN_API_API_KEY,
-    apiKey: "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",
+    apiKey: process.env.REACT_APP_OPEN_API_API_KEY,
   });
   const { show } = props;
   const openai = new OpenAIApi(configuration);
@@ -26,15 +25,15 @@ export default function Chat(props) {
     setLoading(true);
     try {
       let updatedMsgArr = [...msgArr, { role: "User", msg: inputMessage }]
-      let fullMsgStr = updatedMsgArr.reduce((agg,{role,msg}) => agg +=`${role} : ${msg} \n`, "")
+      let fullMsgStr = updatedMsgArr.reduce((agg, { role, msg }) => agg += `${role} : ${msg} \n`, "")
       setMsgArr(updatedMsgArr)
 
-      const updateFullMsg = fullMsgStr +" User: " + inputMessage + "\n AI: "
+      const updateFullMsg = fullMsgStr + " User: " + inputMessage + "\n AI: "
       setFullMsgString(updateFullMsg)
-      const fullPrompt = helpAI+ patientRecord  + updateFullMsg
+      const fullPrompt = helpAI + patientRecord + updateFullMsg
       const result = await openai.createCompletion({
         model: "text-davinci-003",
-        
+
         prompt: fullPrompt,
         temperature: 0.5,
         max_tokens: 200,
