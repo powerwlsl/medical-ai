@@ -13,7 +13,9 @@ import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${process.env.REACT_APP_OPEN_API_API_KEY}`,
+  // Authorization: `Bearer ${process.env.REACT_APP_OPEN_API_API_KEY}`,
+
+  Authorization: `Bearer ${"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"}`,
 };
 
 export default function Home() {
@@ -47,8 +49,8 @@ export default function Home() {
         }
       ]
     };
-    console.log(`sending request to ${process.env.REACT_APP_OPEN_AI_ENDPOINT}...`)
-    const res = await axios.post(process.env.REACT_APP_OPEN_AI_ENDPOINT, messages, { headers });
+    // console.log(`sending request to ${process.env.REACT_APP_OPEN_AI_ENDPOINT}...`)
+    const res = await axios.post("https://api.openai.com/v1/chat/completions", messages, { headers });
     console.log(res.data);
     setResult(res.data.choices[0].message.content);
     setLoading(false);

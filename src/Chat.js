@@ -4,7 +4,8 @@ import env from "react-dotenv";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
   const configuration = new Configuration({
-    apiKey: process.env.REACT_APP_OPEN_API_API_KEY,
+    //apiKey: process.env.REACT_APP_OPEN_API_API_KEY,
+    apiKey: "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",
   });
   const { show } = props;
   const openai = new OpenAIApi(configuration);
@@ -16,8 +17,8 @@ export default function Chat(props) {
   const [msgArr, setMsgArr] = useState([])
   const inputRef = useRef(null);
 
+  const helpAI = "You are a medical expert explainer with twist. You explain to your user in a language that anyone can understand.\n\n"
   const patientRecord = "Patient's record: Received in formalin, labeled with the patient's name, date of birth, and appendix, is a 5.8 cm in length by 0.8 cm in greatest diameter appendix with a stapled proximal margin. The serosal surface is tan brown with focal areas of fibrinopurulent appearing exudate. The mesoappendix measures 1.7 cm from the wall in greatest dimension. The proximal margin is inked blue and shaved. A 0.5 x 0.4 x 0.2 cm tan-brown ovoid possible lymph node is identified. Sectioning the appendix reveals tan-brown, granular contents within the lumen. The lumen ranges from 0.3-0.5 cm in diameter. The wall thickness ranges from 0.1-0.3 cm. No discrete lesions, masses or fecaliths are identified. Representative sections are submitted in cassette A1.\n";
-  const helpAI = "\nYou are a medical expert. Response to user based on the given patient's record\n\n"
   const handleSubmit = async (e) => {
     inputRef.current.value = "";
     e.preventDefault();
@@ -25,21 +26,22 @@ export default function Chat(props) {
     setLoading(true);
     try {
       let updatedMsgArr = [...msgArr, { role: "User", msg: inputMessage }]
-
+      let fullMsgStr = updatedMsgArr.reduce((agg,{role,msg}) => agg +=`${role} : ${msg} \n`, "")
       setMsgArr(updatedMsgArr)
 
-      const updateFullMsg = "\n User: " + inputMessage + "\n AI: "
+      const updateFullMsg = fullMsgStr +" User: " + inputMessage + "\n AI: "
       setFullMsgString(updateFullMsg)
-      const fullPrompt = patientRecord + helpAI + updateFullMsg
+      const fullPrompt = helpAI+ patientRecord  + updateFullMsg
       const result = await openai.createCompletion({
         model: "text-davinci-003",
+        
         prompt: fullPrompt,
         temperature: 0.5,
-        max_tokens: 100,
+        max_tokens: 200,
       });
 
       console.log("response", result.data.choices[0].text);
-      updatedMsgArr = [...updatedMsgArr, { role: "AI", msg: result.data.choices[0].text }]
+      updatedMsgArr = [...updatedMsgArr, { role: "AI", msg: result.data.choices[0].text.replaceAll("\n", "") }]
       setMsgArr(updatedMsgArr)
       setApiResponse(result.data.choices[0].text);
       setMsgArr(updatedMsgArr)
