@@ -25,10 +25,10 @@ export default function Chat(props) {
     setLoading(true);
     try {
       let updatedMsgArr = [...msgArr, { role: "User", msg: inputMessage }]
-      console.log(updatedMsgArr)
+
       setMsgArr(updatedMsgArr)
 
-      const updateFullMsg = fullMsgString + "\n User: " + inputMessage + "\n AI: "
+      const updateFullMsg = "\n User: " + inputMessage + "\n AI: "
       setFullMsgString(updateFullMsg)
       const fullPrompt = patientRecord + helpAI + updateFullMsg
       const result = await openai.createCompletion({

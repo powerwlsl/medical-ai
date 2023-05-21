@@ -107,7 +107,7 @@ export default function Home() {
           {result}
         </p>
       </div>
-      <Dropzone setFiles={setFiles} files={files} upload={refetch} />
+
       <Chat show={showChat}></Chat>
       <button className="chatBtn bg-blue-400 rounded-full" onClick={() => { setShowChat(!showChat) }}>
         <ChatBubbleLeftIcon className="h-8 w-8 text-white m-auto" />
