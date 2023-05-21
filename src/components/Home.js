@@ -47,7 +47,7 @@ export default function Home() {
         }
       ]
     };
-    console.log(`sending request to ${process.env.OPEN_AI_ENDPOINT}...`)
+    console.log(`sending request to ${process.env.REACT_APP_OPEN_AI_ENDPOINT}...`)
     const res = await axios.post(process.env.REACT_APP_OPEN_AI_ENDPOINT, messages, { headers });
     console.log(res.data);
     setResult(res.data.choices[0].message.content);
