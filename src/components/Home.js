@@ -52,7 +52,7 @@ export default function Home() {
       </Tooltip>
       <iframe
         id="myWidget"
-        src="https://human.biodigital.com/widget/?m=abdominal_aortic_aneurysm&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
+        src="https://human.biodigital.com/widget/?m=appendicitis_v02&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
         width="100%"
         height="400px"
         title="Cochlear Implant Simulation"
