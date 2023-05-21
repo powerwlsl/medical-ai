@@ -1,9 +1,10 @@
-import { React, useState } from "react";
+import { React, useRef, useState } from "react";
 import ChatBubble from "./components/ChatBubble";
+import env from "react-dotenv";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: env.OPEN_API_API_KEY,
   });
   const { show } = props;
   const openai = new OpenAIApi(configuration);
@@ -13,18 +14,23 @@ export default function Chat(props) {
   const [inputMessage, setInputMessage] = useState("");
   const [fullMsgString, setFullMsgString] = useState("");
   const [msgArr, setMsgArr] = useState([])
+  const inputRef = useRef(null);
 
-  const patientRecord = "HTPN IMAGING - 07/06/2021 5:57 PM CDT EXAM: US UPPER EXTREMITY VENOUS DUPLEX RIGHT HISTORY: Right upper extremity pain. TECHNIQUE: Venous Doppler ultrasound of the right upper extremity was performed utilizing grayscale, color Doppler, and spectral Doppler techniques. Periodic external compression of the veins and distal augmentation were performed. COMPARISON: None. FINDINGS: The internal jugular, subclavian, axillary and brachial veins are fully compressible and demonstrate patency on color Doppler and spectral Doppler interrogation. The superficial cephalic and basilic veins are also compressible and patent. \n";
-  const helpAI = "\n Explain this medical record for an average person: \n"
+  const patientRecord = "Patient's record: Received in formalin, labeled with the patient's name, date of birth, and appendix, is a 5.8 cm in length by 0.8 cm in greatest diameter appendix with a stapled proximal margin. The serosal surface is tan brown with focal areas of fibrinopurulent appearing exudate. The mesoappendix measures 1.7 cm from the wall in greatest dimension. The proximal margin is inked blue and shaved. A 0.5 x 0.4 x 0.2 cm tan-brown ovoid possible lymph node is identified. Sectioning the appendix reveals tan-brown, granular contents within the lumen. The lumen ranges from 0.3-0.5 cm in diameter. The wall thickness ranges from 0.1-0.3 cm. No discrete lesions, masses or fecaliths are identified. Representative sections are submitted in cassette A1.\n";
+  const helpAI = "\nYou are a medical expert. Response to user based on the given patient's record\n\n"
   const handleSubmit = async (e) => {
+    inputRef.current.value = "";
     e.preventDefault();
+
     setLoading(true);
     try {
-        let updatedMsgArr = [...msgArr, {role: "User", msg: inputMessage}]
-        setMsgArr(updatedMsgArr)
-        const updateFullMsg =fullMsgString+ "\n User: " + inputMessage
-        setFullMsgString(updateFullMsg)
-        const fullPrompt = patientRecord + helpAI + updateFullMsg
+      let updatedMsgArr = [...msgArr, { role: "User", msg: inputMessage }]
+      console.log(updatedMsgArr)
+      setMsgArr(updatedMsgArr)
+
+      const updateFullMsg = fullMsgString + "\n User: " + inputMessage + "\n AI: "
+      setFullMsgString(updateFullMsg)
+      const fullPrompt = patientRecord + helpAI + updateFullMsg
       const result = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: fullPrompt,
@@ -32,8 +38,8 @@ export default function Chat(props) {
         max_tokens: 100,
       });
 
-      //console.log("response", result.data.choices[0].text);
-      updatedMsgArr = [...updatedMsgArr, {role: "AI", msg: result.data.choices[0].text}]
+      console.log("response", result.data.choices[0].text);
+      updatedMsgArr = [...updatedMsgArr, { role: "AI", msg: result.data.choices[0].text }]
       setMsgArr(updatedMsgArr)
       setApiResponse(result.data.choices[0].text);
       setMsgArr(updatedMsgArr)
@@ -45,11 +51,11 @@ export default function Chat(props) {
   };
 
   return (
-    <div className={`container mx-auto chatApp ${show ? "" : "hide"}`}>
+    <div className={`container mx-auto rounded-lg shadow-lg chatApp  bg-white ${show ? "" : "hide"}`}>
       <div class="max-w-2xl border rounded">
         <div>
           <div class="w-full">
-            <div class="relative flex items-center p-3 border-b border-gray-300">
+            <div class="relative flex items-center p-3 border-b border-gray-200">
               <img
                 class="object-cover w-10 h-10 rounded-full"
                 src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
@@ -58,14 +64,14 @@ export default function Chat(props) {
               <span class="block ml-2 font-bold text-gray-600">Emma</span>
               <span class="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
             </div>
-            <div class="relative w-full p-6 overflow-y-auto">
+            <div class="relative w-full p-6 overflow-y-auto bg-[#f1f5f9]">
               <ul class="space-y-2">
                 {
-                    msgArr.map(({role, msg}) => {
-                        <ChatBubble isAgent={role == "User" } message={msg}></ChatBubble>
-                    })
+                  msgArr.map(({ role, msg }) => {
+                    return <ChatBubble isAgent={role == "User"} message={msg}></ChatBubble>
+                  })
                 }
-               
+
 
               </ul>
             </div>
@@ -110,6 +116,7 @@ export default function Chat(props) {
                 class="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
                 name="message"
                 required
+                ref={inputRef}
                 onChange={(e) => setInputMessage(e.target.value)}
               />
               <button>

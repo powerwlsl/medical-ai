@@ -66,5 +66,4 @@ window.env = {
   "npm_node_execpath": "/Users/hyejinahn/.nvm/versions/node/v16.16.0/bin/node",
   "npm_config_prefix": "/Users/hyejinahn/.nvm/versions/node/v16.16.0",
   "OPEN_AI_ENDPOINT": "https://api.openai.com/v1/chat/completions",
-  "OPEN_API_API_KEY": "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"
 };

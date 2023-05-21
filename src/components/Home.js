@@ -8,6 +8,7 @@ import axios from "axios";
 import env from "react-dotenv";
 import Chat from "../Chat";
 import BioDigitalComponent from "../BioDigitalComponent";
+import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 
 
 const headers = {
@@ -41,7 +42,7 @@ export default function Home() {
         },
         {
           "role": "user",
-          "content": "This is what I got from my doctor. Please explain it to me using simple language that a high school student can understand. Keep your explanation within 5 sentences:\n\n" + text
+          "content": "This is what I got from my doctor. Please explain it to me using simple language that a high school student can understand, but keep it professional. Keep your explanation in around 3 paragraphs, less then 12 sentences :\n\n" + text
         }
       ]
     };
@@ -59,51 +60,56 @@ export default function Home() {
 
   if (loading) {
     return (
-      <Spinner color="blue" size="" className='m-auto mt-64' />
+      <Spinner color="blue" width="100" height="100" className='m-auto mt-64' />
     )
   }
 
   if (!result) {
     return (
-      <Dropzone setFiles={setFiles} files={files} upload={refetch} />
+      <>
+        <Dropzone setFiles={setFiles} files={files} upload={refetch} />
+        <Chat show={showChat}></Chat>
+        <button className="chatBtn bg-blue-400 rounded-full" onClick={() => { setShowChat(!showChat) }}>
+          <ChatBubbleLeftIcon className="h-8 w-8 text-white m-auto" />
+        </button>
+      </>
+
     )
   }
 
   return (
     <>
-      <h1 className='text-3xl font-bold leading-tight tracking-tight text-gray-900 mb-4'>
-        Appendicitis
-      </h1>
-      <Tooltip content="Material Tailwind">
-        <button className="bg-blue-500 text-white font-bold rounded-full px-2 py-0">
-          ?
-        </button>
-      </Tooltip>
+      <div className='bg-white px-6 py-10 rounded-lg shadow'>
+        <div className='flex'>
+          <h1 className='text-2xl font-bold leading-tight tracking-tight text-gray-800 mb-4'>
 
-      <BioDigitalComponent tour="appendicitis_v02" />
+            Appendicitis
+          </h1>
+          <Tooltip content="Appendicitis is an inflammation of the appendix, a finger-shaped pouch that projects from your colon on the lower right side of your abdomen.">
+            <button className="bg-blue-500 text-white font-bold rounded-full px-1 py-0 w-5 h-5 ml-2 mt-1 text-xs">
+              ?
+            </button>
+          </Tooltip>
 
-      <h1 className='text-2xl font-bold leading-tight tracking-tight text-gray-900 mt-10'>
-        Result</h1>
-      <p className='mt-4'>
-        {result}
-      </p>
+        </div>
+        <p className='text-gray-600 mb-4'>
+          Hover over the highlighted areas of the body to learn more about your condition.
+        </p>
+        <BioDigitalComponent tour="appendicitis_v02" />
+      </div>
 
+      <div className='bg-white px-6 py-10 rounded-lg shadow mt-10 mb-20'>
+        <h1 className='text-2xl font-bold leading-tight tracking-tight text-gray-900'>
+          Explanation
+        </h1>
+        <p className='mt-4 whitespace-pre-wrap'>
+          {result}
+        </p>
+      </div>
+      <Dropzone setFiles={setFiles} files={files} upload={refetch} />
       <Chat show={showChat}></Chat>
-      <button className="chatBtn" onClick={() => { setShowChat(!showChat) }}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-16 h-16"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
-          />
-        </svg>
+      <button className="chatBtn bg-blue-400 rounded-full" onClick={() => { setShowChat(!showChat) }}>
+        <ChatBubbleLeftIcon className="h-8 w-8 text-white m-auto" />
       </button>
     </>
   );

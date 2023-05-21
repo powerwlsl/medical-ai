@@ -28,10 +28,11 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import Modal from './components/modal'
 
 const navigation = [
-  { name: 'Own Your Health Data', href: '#', icon: DocumentChartBarIcon, current: false },
-  { name: 'Diagnosis History', href: '#', icon: HomeIcon, current: true },
+  { name: 'Own Your Health Data', href: '#', icon: DocumentChartBarIcon, current: true },
+  { name: 'Diagnosis History', href: '#', icon: HomeIcon, current: false },
   // { name: 'Treatment Plan', href: '#', icon: UsersIcon, current: false },
   // { name: 'Lifestyle', href: '#', icon: FolderIcon, current: false },
 
@@ -55,6 +56,7 @@ export default function Layout({ children }) {
 
   return (
     <>
+
       {/*
         This example requires updating your template:
 
@@ -65,7 +67,7 @@ export default function Layout({ children }) {
       */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
+          <Dialog as="div" className="relative z-8 lg:hidden" onClose={setSidebarOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -109,10 +111,12 @@ export default function Layout({ children }) {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=white"
+                        className="h-12 w-auto mt-4"
+                        src="./logo.png"
                         alt="Your Company"
                       />
+                      <p className='text-white font-bold mt-4 ml-2 text-xl'>Medical AI</p>
+
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -142,7 +146,7 @@ export default function Layout({ children }) {
                             ))}
                           </ul>
                         </li>
-                                      
+
                         <li className="mt-auto">
                           <a
                             href="#"
@@ -165,15 +169,16 @@ export default function Layout({ children }) {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:z-8 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=white"
+                className="h-12 w-auto mt-4"
+                src="./logo.png"
                 alt="Your Company"
               />
+              <p className='text-white font-bold mt-4 ml-2 text-xl'>Medical AI</p>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -244,7 +249,7 @@ export default function Layout({ children }) {
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+          <div className="sticky top-0 z-7 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -327,13 +332,14 @@ export default function Layout({ children }) {
             </div>
           </div>
 
-          <main className="py-10">
+          <main className="py-10 bg-[#f1f5f9] min-h-screen">
             <div className="px-4 sm:px-6 lg:px-8">{
               children
             }</div>
           </main>
         </div>
       </div>
+
     </>
   )
 }
