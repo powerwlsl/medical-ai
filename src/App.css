@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+
+button.chatBtn {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 48px;
+  HEIGHT: 48px;
+}
+
+
+.mx-auto.chatApp {
+  position: fixed;
+  right: 0;
+  width: 480px;
+  bottom: 80px;
+  background: #eee;
+}
+
+.mx-auto.chatApp.hide{
+  display: none;
+}
