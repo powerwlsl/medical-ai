@@ -3,7 +3,7 @@ import ChatBubble from "./components/ChatBubble";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const { show } = props;
   const openai = new OpenAIApi(configuration);
@@ -12,21 +12,31 @@ export default function Chat(props) {
   const [loading, setLoading] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [fullMsgString, setFullMsgString] = useState("");
+  const [msgArr, setMsgArr] = useState([])
 
-  const patientRecord = `HTPN IMAGING - 07/06/2021 5:57 PM CDT EXAM: US UPPER EXTREMITY VENOUS DUPLEX RIGHT HISTORY: Right upper extremity pain. TECHNIQUE: Venous Doppler ultrasound of the right upper extremity was performed utilizing grayscale, color Doppler, and spectral Doppler techniques. Periodic external compression of the veins and distal augmentation were performed. COMPARISON: None. FINDINGS: The internal jugular, subclavian, axillary and brachial veins are fully compressible and demonstrate patency on color Doppler and spectral Doppler interrogation. The superficial cephalic and basilic veins are also compressible and patent.`;
-  const helpAI = "\n Explain this medical record for an average person: "
+  const patientRecord = "HTPN IMAGING - 07/06/2021 5:57 PM CDT EXAM: US UPPER EXTREMITY VENOUS DUPLEX RIGHT HISTORY: Right upper extremity pain. TECHNIQUE: Venous Doppler ultrasound of the right upper extremity was performed utilizing grayscale, color Doppler, and spectral Doppler techniques. Periodic external compression of the veins and distal augmentation were performed. COMPARISON: None. FINDINGS: The internal jugular, subclavian, axillary and brachial veins are fully compressible and demonstrate patency on color Doppler and spectral Doppler interrogation. The superficial cephalic and basilic veins are also compressible and patent. \n";
+  const helpAI = "\n Explain this medical record for an average person: \n"
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
+        let updatedMsgArr = [...msgArr, {role: "User", msg: inputMessage}]
+        setMsgArr(updatedMsgArr)
+        const updateFullMsg =fullMsgString+ "\n User: " + inputMessage
+        setFullMsgString(updateFullMsg)
+        const fullPrompt = patientRecord + helpAI + updateFullMsg
       const result = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: inputMessage,
+        prompt: fullPrompt,
         temperature: 0.5,
-        max_tokens: 4000,
+        max_tokens: 100,
       });
+
       //console.log("response", result.data.choices[0].text);
+      updatedMsgArr = [...updatedMsgArr, {role: "AI", msg: result.data.choices[0].text}]
+      setMsgArr(updatedMsgArr)
       setApiResponse(result.data.choices[0].text);
+      setMsgArr(updatedMsgArr)
     } catch (e) {
       //console.log(e);
       setApiResponse("Something is going wrong, Please try again.");
@@ -50,25 +60,13 @@ export default function Chat(props) {
             </div>
             <div class="relative w-full p-6 overflow-y-auto">
               <ul class="space-y-2">
-                <ChatBubble isAgent={true} message={"Hiiiiee :)"}></ChatBubble>
-                <ChatBubble isAgent={false} message={"Hiiiiee :)"}></ChatBubble>
-                <li class="flex justify-end">
-                  <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                    <span class="block">Hiiii</span>
-                  </div>
-                </li>
-                <li class="flex justify-end">
-                  <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                    <span class="block">how are you?</span>
-                  </div>
-                </li>
-                <li class="flex justify-start">
-                  <div class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span class="block">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.{" "}
-                    </span>
-                  </div>
-                </li>
+                {
+                    msgArr.map(({role, msg}) => {
+                        <ChatBubble isAgent={role == "User" } message={msg}></ChatBubble>
+                    })
+                }
+               
+
               </ul>
             </div>
 
