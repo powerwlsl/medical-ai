@@ -14,26 +14,27 @@ const deleteButton = {
   alignItems: 'center'
 };
 
-function Dropzone({ files, setFiles, setEnableUpload }) {
+function Dropzone({ files, setFiles, upload }) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: acceptedFiles => {
       Promise.all(
         acceptedFiles.map(file =>
           new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.readAsDataURL(file);
             reader.onload = () =>
               resolve({
                 name: file.name,
                 data: reader.result,
-                preview: URL.createObjectURL(file)
               });
+
             reader.onerror = error => reject(error);
+            reader.readAsText(file); // Read file as text
+
           })
         )
       )
-        .then(base64Files => {
-          setFiles([...files, ...base64Files]);
+        .then(textFiles => {
+          setFiles([...files, ...textFiles]);
         })
         .catch(error => console.log(error));
     }
@@ -84,12 +85,7 @@ function Dropzone({ files, setFiles, setEnableUpload }) {
         {
           files.length > 0 &&
           <button className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-
-
-
-            onClick={() => {
-              setEnableUpload(true);
-            }}
+            onClick={upload}
           >
             Upload
           </button>
