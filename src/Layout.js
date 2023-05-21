@@ -111,7 +111,7 @@ export default function Layout({ children }) {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-12 w-auto mt-4"
+                        className="h-10 w-auto mt-4"
                         src="./logo.png"
                         alt="Your Company"
                       />
@@ -174,7 +174,7 @@ export default function Layout({ children }) {
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <img
-                className="h-12 w-auto mt-4"
+                className="h-10 w-auto mt-4"
                 src="./logo.png"
                 alt="Your Company"
               />

@@ -13,7 +13,7 @@ import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${env.OPEN_API_API_KEY}`,
+  Authorization: `Bearer ${process.env.OPEN_API_API_KEY}`,
 };
 
 export default function Home() {
@@ -47,7 +47,7 @@ export default function Home() {
       ]
     };
 
-    const res = await axios.post(env.OPEN_AI_ENDPOINT, messages, { headers });
+    const res = await axios.post(process.env.OPEN_AI_ENDPOINT, messages, { headers });
     console.log(res.data);
     setResult(res.data.choices[0].message.content);
     setLoading(false);
