@@ -43,7 +43,7 @@ export default function Home() {
         },
         {
           "role": "user",
-          "content": "This is what I got from my doctor. Please explain it to me using simple language that a high school student can understand, but keep it professional. Keep your explanation in around 3 paragraphs, less then 12 sentences :\n\n" + text
+          "content": "Summarize the user input using simple language that a high school student can understand, but keep it professional. Keep your explanation in around 3 paragraphs, less then 12 sentences :\n\n" + "User input: " + text
         }
       ]
     };
