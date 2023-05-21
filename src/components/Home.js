@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import env from "react-dotenv";
+import BioDigitalComponent from '../BioDigitalComponent';
 
 const headers = {
   "Content-Type": "application/json",
@@ -49,11 +50,13 @@ export default function Home() {
       </Tooltip>
       <iframe
         id="myWidget"
-        src="https://human.biodigital.com/widget/?m=cochlear_implant&dk=351c2b79d44928c010e29e0e9f3f4e25570d30ff"
+        src="https://human.biodigital.com/widget/?m=cochlear_implant&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
         width="100%"
         height="400px"
         title="Cochlear Implant Simulation"
       ></iframe>
+
+
       <Dropzone setFiles={setFiles} files={files} />
     </>
   )
