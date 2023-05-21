@@ -1,7 +1,33 @@
-import React from "react";
-
+import {React, useState} from "react";
+const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
+    const configuration = new Configuration({
+        apiKey: "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",
+      });
     const {show} = props;
+    const openai = new OpenAIApi(configuration);
+  const [prompt, setPrompt] = useState("hey how are you?");
+  const [apiResponse, setApiResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const result = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        temperature: 0.5,
+        max_tokens: 4000,
+      });
+      //console.log("response", result.data.choices[0].text);
+      setApiResponse(result.data.choices[0].text);
+    } catch (e) {
+      //console.log(e);
+      setApiResponse("Something is going wrong, Please try again.");
+    }
+    setLoading(false);
+  };
 
   return (
     
@@ -102,7 +128,7 @@ export default function Chat(props) {
                   />
                 </svg>
               </button>
-              <button type="submit">
+              <button type="submit" onClick={handleSubmit}>
                 <svg
                   class="w-5 h-5 text-gray-500 origin-center transform rotate-90"
                   xmlns="http://www.w3.org/2000/svg"
