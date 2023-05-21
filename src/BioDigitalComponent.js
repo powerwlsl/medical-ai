@@ -25,12 +25,6 @@ const BioDigitalComponent = ({ tour = "appendicitis_v02" }) => {
         width="100%"
         height="400%"
       ></iframe>
-      <div id="messages">
-        <a id="head" href="#">Fly to Head</a>
-        <a id="foot" href="#">Fly to Foot</a>
-        <a id="left" href="#">Rotate Left</a>
-        <a id="right" href="#">Rotate Right</a>
-      </div>
     </div>
   );
 };
