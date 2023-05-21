@@ -68,6 +68,9 @@ export default function Home() {
   if (!result) {
     return (
       <>
+
+        {process.env.REACT_APP_OPEN_AI_ENDPOINT}
+
         <Dropzone setFiles={setFiles} files={files} upload={refetch} />
         <Chat show={showChat}></Chat>
         <button className="chatBtn bg-blue-400 rounded-full" onClick={() => { setShowChat(!showChat) }}>
