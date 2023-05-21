@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const BioDigitalComponent = ({ tour = "male_system_anatomy_skeletal_09" }) => {
+const BioDigitalComponent = ({ tour = "appendicitis_v02" }) => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://developer.biodigital.com/builds/api/2/human-api.min.js';
@@ -12,7 +12,9 @@ const BioDigitalComponent = ({ tour = "male_system_anatomy_skeletal_09" }) => {
     };
   }, []);
 
-  const widgetUrl = `https://human.biodigital.com/widget?id=production/maleAdult/${tour}&ui-info=false&ui-menu=false`;
+  const apiKey = "eb52c806e7d5ac9bcdd93662ab6d708639fc415e";
+  const widgetUrl = `https://human.biodigital.com/widget/?m=${tour}&dk=${apiKey}`;
+  // TODO: handle the following case: https://human.biodigital.com/widget?id=production/maleAdult/${tour}&ui-info=false&ui-menu=false;
 
   return (
     <div>
@@ -21,7 +23,7 @@ const BioDigitalComponent = ({ tour = "male_system_anatomy_skeletal_09" }) => {
         src={widgetUrl}
         title="BioDigital Human"
         width="100%"
-        height="100%"
+        height="400%"
       ></iframe>
       <div id="messages">
         <a id="head" href="#">Fly to Head</a>

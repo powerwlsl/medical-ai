@@ -80,13 +80,8 @@ export default function Home() {
         </button>
       </Tooltip>
 
-      <iframe
-        id="myWidget"
-        src="https://human.biodigital.com/widget/?m=appendicitis_v02&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
-        width="100%"
-        height="400px"
-        title="Cochlear Implant Simulation"
-      ></iframe>
+      <BioDigitalComponent tour="appendicitis_v02" />
+
       <h1 className='text-2xl font-bold leading-tight tracking-tight text-gray-900 mt-10'>
         Result</h1>
       <p className='mt-4'>
