@@ -2,38 +2,6 @@ import { useDropzone } from 'react-dropzone';
 import React, { useEffect, useState } from 'react';
 import { PhotoIcon, XCircleIcon } from '@heroicons/react/24/outline';
 
-
-const thumbsContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
-};
-
-const thumb = {
-  display: 'inline-flex',
-  position: 'relative',
-  marginBottom: 8,
-  marginRight: 8,
-  width: 100,
-  height: 100,
-  padding: 4,
-  boxSizing: 'border-box'
-};
-
-const thumbInner = {
-  display: 'flex',
-  minWidth: 0,
-  overflow: 'hidden'
-};
-
-const img = {
-  display: 'block',
-  width: 'auto',
-  height: '100%',
-  borderRadius: '10px'
-};
-
 const deleteButton = {
   position: 'absolute',
   top: -10,
@@ -44,36 +12,32 @@ const deleteButton = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
-}
+};
 
-function Dropzone({ files, setFiles }) {
-
+function Dropzone({ files, setFiles, setEnableUpload }) {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/*': []
-    },
     onDrop: acceptedFiles => {
       Promise.all(
         acceptedFiles.map(file =>
           new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve({ name: file.name, data: reader.result, preview: URL.createObjectURL(file) });
+            reader.onload = () =>
+              resolve({
+                name: file.name,
+                data: reader.result,
+                preview: URL.createObjectURL(file)
+              });
             reader.onerror = error => reject(error);
           })
         )
       )
         .then(base64Files => {
-
-          setFiles([
-            ...files,
-            ...base64Files
-          ]);
+          setFiles([...files, ...base64Files]);
         })
         .catch(error => console.log(error));
     }
   });
-
 
   const removeFile = (file, e) => {
     e.preventDefault();
@@ -82,29 +46,17 @@ function Dropzone({ files, setFiles }) {
     URL.revokeObjectURL(file.preview); // revoke object URL to avoid memory leaks
   };
 
-
-  const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img
-          src={file.preview}
-          style={img}
-          alt={file.name}
-          onLoad={() => { URL.revokeObjectURL(file.preview) }}
-        />
-        {/* main image check */}
-      </div>
-      <button style={deleteButton} onClick={(e) => removeFile(file, e)}>
+  const fileItems = files.map(file => (
+    <div key={file.name} className="relative mb-2 bg-blue-gray-50 p-3 rounded-lg">
+      <p className="text-black text-sm">{file.name}</p>
+      <button style={deleteButton} onClick={e => removeFile(file, e)}>
         <XCircleIcon />
       </button>
-      <input type="radio" name="mainImage" value={file.id} className='absolute b-0' />
-
     </div>
   ));
 
-
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    // Make sure to revoke the data URIs to avoid memory leaks, will run on unmount
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, []);
 
@@ -124,12 +76,23 @@ function Dropzone({ files, setFiles }) {
             </label>
             <p className="pl-1">or drag and drop</p>
           </div>
-
         </div>
       </div>
-      <aside style={thumbsContainer}>
-        {thumbs}
-      </aside>
+      <aside className='mt-4'>{fileItems}</aside>
+
+      <div className='flex justify-end'>
+        {
+          files.length > 0 &&
+          <button className="bg-blue-500 text-white font-bold rounded-full px-4 py-2"
+            onClick={() => {
+              setEnableUpload(true);
+            }}
+          >
+            Upload
+          </button>
+        }
+      </div>
+
     </section>
   );
 }

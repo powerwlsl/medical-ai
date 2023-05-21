@@ -15,8 +15,10 @@ const headers = {
 
 export default function Home() {
   const [files, setFiles] = useState([]);
+  const [enableUpload, setEnableUpload] = useState(false);
 
   useQuery(['postGpt'], async () => {
+    alert("uploading!")
     const data = "Replace this with the actual medical report you want to explain.";
 
     const messages = {
@@ -35,7 +37,7 @@ export default function Home() {
 
     const res = await axios.post(env.OPEN_AI_ENDPOINT, messages, { headers });
     console.log(res);
-  }, { enabled: false });
+  }, { enabled: enableUpload });
 
 
   return (
@@ -50,14 +52,14 @@ export default function Home() {
       </Tooltip>
       <iframe
         id="myWidget"
-        src="https://human.biodigital.com/widget/?m=cochlear_implant&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
+        src="https://human.biodigital.com/widget/?m=abdominal_aortic_aneurysm&dk=eb52c806e7d5ac9bcdd93662ab6d708639fc415e"
         width="100%"
         height="400px"
         title="Cochlear Implant Simulation"
       ></iframe>
 
 
-      <Dropzone setFiles={setFiles} files={files} />
+      <Dropzone setFiles={setFiles} files={files} setEnableUpload={setEnableUpload} />
     </>
   )
 }
