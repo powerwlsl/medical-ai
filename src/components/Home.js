@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <>
       <h1 className='text-3xl font-bold leading-tight tracking-tight text-gray-900 mb-4'>
-        Lung Cancer
+        Appendicitis
       </h1>
       <Tooltip content="Material Tailwind">
         <button className="bg-blue-500 text-white font-bold rounded-full px-2 py-0">
