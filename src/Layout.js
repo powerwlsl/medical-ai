@@ -24,20 +24,22 @@ import {
   FolderIcon,
   HomeIcon,
   UsersIcon,
+  DocumentChartBarIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
-  { name: 'Diagnosis', href: '#', icon: HomeIcon, current: true },
-  { name: 'Treatment', href: '#', icon: UsersIcon, current: false },
-  { name: 'Lifestyle', href: '#', icon: FolderIcon, current: false },
+  { name: 'Own Your Health Data', href: '#', icon: DocumentChartBarIcon, current: false },
+  { name: 'Diagnosis History', href: '#', icon: HomeIcon, current: true },
+  // { name: 'Treatment Plan', href: '#', icon: UsersIcon, current: false },
+  // { name: 'Lifestyle', href: '#', icon: FolderIcon, current: false },
 
 ]
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+const problems = [
+  { id: 1, name: 'Ascites', href: 'hepatitis_a_03', initial: 'A', current: false },
+  { id: 2, name: 'Budd‐Chiari', href: '#', initial: 'B', current: false },
+  { id: 3, name: 'Polycythemia Vera', href: '#', initial: 'P', current: false },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },
@@ -140,29 +142,7 @@ export default function Layout({ children }) {
                             ))}
                           </ul>
                         </li>
-                        <li>
-                          <div className="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
-                          <ul role="list" className="-mx-2 mt-2 space-y-1">
-                            {teams.map((team) => (
-                              <li key={team.name}>
-                                <a
-                                  href={team.href}
-                                  className={classNames(
-                                    team.current
-                                      ? 'bg-indigo-700 text-white'
-                                      : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
-                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                  )}
-                                >
-                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
-                                    {team.initial}
-                                  </span>
-                                  <span className="truncate">{team.name}</span>
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
+                                      
                         <li className="mt-auto">
                           <a
                             href="#"
@@ -224,23 +204,23 @@ export default function Layout({ children }) {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
+                  <div className="text-xs font-semibold leading-6 text-indigo-200">Your Diagnosis History</div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
-                    {teams.map((team) => (
-                      <li key={team.name}>
+                    {problems.map((problem) => (
+                      <li key={problem.name}>
                         <a
-                          href={team.href}
+                          href={problem.href}
                           className={classNames(
-                            team.current
+                            problem.current
                               ? 'bg-indigo-700 text-white'
                               : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
-                            {team.initial}
+                            {problem.initial}
                           </span>
-                          <span className="truncate">{team.name}</span>
+                          <span className="truncate">{problem.name}</span>
                         </a>
                       </li>
                     ))}
