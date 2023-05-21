@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const BioDigitalComponent = () => {
+const BioDigitalComponent = ({ tour = "male_system_anatomy_skeletal_09" }) => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://developer.biodigital.com/builds/api/2/human-api.min.js';
@@ -12,11 +12,14 @@ const BioDigitalComponent = () => {
     };
   }, []);
 
+  const widgetUrl = `https://human.biodigital.com/widget?id=production/maleAdult/${tour}&ui-info=false&ui-menu=false`;
+
   return (
     <div>
       <iframe
-        id="myWidget"
-        src="https://human.biodigital.com/widget?id=production/maleAdult/male_system_anatomy_skeletal_09&ui-info=false&ui-menu=false"
+        id={`visualize_${tour}`}
+        src={widgetUrl}
+        title="BioDigital Human"
         width="100%"
         height="100%"
       ></iframe>
