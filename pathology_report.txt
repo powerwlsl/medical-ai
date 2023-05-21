@@ -1,0 +1,60 @@
+Study Result
+Narrative
+CASE: CPP-21-15875
+PATIENT: HYEJIN AHN
+
+
+TISSUES:
+Appendix
+CLINICAL HISTORY:
+
+
+Appendicitis. Laparoscopic appendectomy
+
+
+FINAL MICROSCOPIC DIAGNOSIS:
+
+Appendix, appendectomy:
+- Acute appendicitis with periappendicitis.
+- One reactive lymph node.
+
+
+GROSS DESCRIPTION:
+Received in formalin, labeled with the patient's name, date of birth,
+and "appendix", is a 5.8 cm in length by 0.8 cm in greatest diameter
+appendix with a stapled proximal margin. The serosal surface is tan
+brown with focal areas of fibrinopurulent appearing exudate. The
+mesoappendix measures 1.7 cm from the wall in greatest dimension. The
+proximal margin is inked blue and shaved. A 0.5 x 0.4 x 0.2 cm
+tan-brown ovoid possible lymph node is identified. Sectioning the
+appendix reveals tan-brown, granular contents within the lumen. The
+lumen ranges from 0.3-0.5 cm in diameter. The wall thickness ranges
+from 0.1-0.3 cm. No discrete lesions, masses or fecaliths are
+identified. Representative sections are submitted in cassette A1.
+IMJ MJ 7/6/2021 08:30 PM
+
+Judith A. Doyle M.D. Report read and electronically signed: 7/7/2021
+2:51:00PM
+
+All pathology specimens processed at Sutter California Pacific Medical
+Center, Davies Campus, Castro St. & Duboce Ave., San Francisco, CA
+94114, CLIA # 05-D0643656.
+Diagnoses rendered at Sutter California Pacific Medical Center, Van Ness
+Campus, 1101 Van Ness Ave, San Francisco, CA 94109, CLIA # 05-D2162311.
+Any intra-procedural consultations performed at Sutter California
+Pacific Medical Center, Van Ness Campus, 1101 Van Ness Ave, San
+Francisco, CA 94109, CLIA # 05-D2162311.
+
+Component Results
+There is no component information for this result.
+
+General Information
+Ordered by Taehyun P Chung
+
+Collected on 07/05/2021 2:23 PM
+
+Resulted on 07/07/2021 2:51 PM
+
+Result Status: Final result
+
+This test result has been released by an automatic process.

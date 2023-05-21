@@ -8,9 +8,7 @@ import Home from './components/Home';
 function App() {
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <Layout children={<Home></Home>}>
-
-      </Layout>
+      <Layout children={<Home></Home>} />
     </QueryClientProvider>
   );
 }
