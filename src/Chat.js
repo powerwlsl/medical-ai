@@ -1,22 +1,27 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
+import ChatBubble from "./components/ChatBubble";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
-    const configuration = new Configuration({
-        apiKey: "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",
-      });
-    const {show} = props;
-    const openai = new OpenAIApi(configuration);
+  const configuration = new Configuration({
+    apiKey: "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",
+  });
+  const { show } = props;
+  const openai = new OpenAIApi(configuration);
   const [prompt, setPrompt] = useState("hey how are you?");
   const [apiResponse, setApiResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [inputMessage, setInputMessage] = useState("");
+  const [fullMsgString, setFullMsgString] = useState("");
 
+  const patientRecord = `HTPN IMAGING - 07/06/2021 5:57 PM CDT EXAM: US UPPER EXTREMITY VENOUS DUPLEX RIGHT HISTORY: Right upper extremity pain. TECHNIQUE: Venous Doppler ultrasound of the right upper extremity was performed utilizing grayscale, color Doppler, and spectral Doppler techniques. Periodic external compression of the veins and distal augmentation were performed. COMPARISON: None. FINDINGS: The internal jugular, subclavian, axillary and brachial veins are fully compressible and demonstrate patency on color Doppler and spectral Doppler interrogation. The superficial cephalic and basilic veins are also compressible and patent.`;
+  const helpAI = "\n Explain this medical record for an average person: "
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const result = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: prompt,
+        prompt: inputMessage,
         temperature: 0.5,
         max_tokens: 4000,
       });
@@ -30,8 +35,7 @@ export default function Chat(props) {
   };
 
   return (
-    
-    <div className={`container mx-auto chatApp ${show ? '': 'hide'}` }>
+    <div className={`container mx-auto chatApp ${show ? "" : "hide"}`}>
       <div class="max-w-2xl border rounded">
         <div>
           <div class="w-full">
@@ -46,11 +50,8 @@ export default function Chat(props) {
             </div>
             <div class="relative w-full p-6 overflow-y-auto">
               <ul class="space-y-2">
-                <li class="flex justify-start">
-                  <div class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span class="block">Hi</span>
-                  </div>
-                </li>
+                <ChatBubble isAgent={true} message={"Hiiiiee :)"}></ChatBubble>
+                <ChatBubble isAgent={false} message={"Hiiiiee :)"}></ChatBubble>
                 <li class="flex justify-end">
                   <div class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
                     <span class="block">Hiiii</span>
@@ -111,6 +112,7 @@ export default function Chat(props) {
                 class="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
                 name="message"
                 required
+                onChange={(e) => setInputMessage(e.target.value)}
               />
               <button>
                 <svg
