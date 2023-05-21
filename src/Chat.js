@@ -4,7 +4,7 @@ import env from "react-dotenv";
 const { Configuration, OpenAIApi } = require("openai");
 export default function Chat(props) {
   const configuration = new Configuration({
-    apiKey: process.env.OPEN_API_API_KEY,
+    apiKey: process.env.REACT_APP_OPEN_API_API_KEY,
   });
   const { show } = props;
   const openai = new OpenAIApi(configuration);

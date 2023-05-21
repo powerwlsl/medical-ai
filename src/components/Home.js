@@ -13,7 +13,7 @@ import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${process.env.OPEN_API_API_KEY}`,
+  Authorization: `Bearer ${process.env.REACT_APP_OPEN_API_API_KEY}`,
 };
 
 export default function Home() {
