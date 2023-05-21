@@ -23,7 +23,7 @@ const BioDigitalComponent = ({ tour = "appendicitis_v02" }) => {
         src={widgetUrl}
         title="BioDigital Human"
         width="100%"
-        height="400%"
+        height="400px"
       ></iframe>
     </div>
   );
